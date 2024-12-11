@@ -1,0 +1,37 @@
+<div id="counter-component"></div>
+<script>
+class CounterComponent extends StateJ {
+    constructor() {
+        super({
+            useGlobalState: true,
+            debug: false,
+            storageType: 'session'
+        });
+
+        // Inicializa o contador se necessário
+        if (this.getGlobalState('count') === undefined) {
+            this.setGlobalState('count', 0);
+        }
+    }
+
+    handleCasa = (e) => {
+        const currentCount = this.getGlobalState('count') || 0;
+                this.setGlobalState('count', currentCount + 1);
+    }
+
+    renderComponent() {
+        const count = this.getGlobalState('count') || 0;
+        return `
+            <div class="counter">
+                <h2>Componente Contador</h2>
+                <p>Contagem atual: ${count}</p>
+                <button onclick="${this.registerHandler(this.handleCasa)}">Incrementar</button>
+            </div>
+        `;
+    }
+}
+
+// Inicializa o componente
+const counter = new CounterComponent();
+counter.mount('#counter-component');
+</script>
